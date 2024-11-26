@@ -58,7 +58,7 @@ const SignIn = () => {
                 {isLogin && (
                     <button
                         className="forgot-password"
-                        onClick={() => alert('Forgot Password?')}
+                        onClick={() => alert('>아직 구현하지 못한 이벤트 입니다<')}
                     >
                         FORGOT YOUR PASSWORD?
                     </button>

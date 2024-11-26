@@ -38,23 +38,35 @@ body {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
-/* 메인 컨테이너 애니메이션 */
+/* 애니메이션 효과 추가 */
 .login-container {
-    transition: transform 0.5s ease, opacity 0.5s ease; /* 애니메이션 효과 추가 */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* 애니메이션 효과 */
+    transform: scale(1); /* 기본 크기 */
     opacity: 1; /* 기본 투명도 */
 }
 
 .login-container.animating {
-    opacity: 0; /* 전환 중 투명해지도록 설정 */
-    transform: scale(0.95); /* 전환 중 살짝 축소 효과 */
+    transform: scale(0.95); /* 전환 중 축소 */
+    opacity: 0; /* 전환 중 투명도 감소 */
 }
 
-.login-container.login-mode {
-    transform: translateX(0); /* 로그인 상태 기본 위치 */
+/* 로그인 모드에서 회원가입 모드로 전환 */
+.login-container.animating.login-mode {
+    transform: translateY(-150%) scale(0.75); /* 위로 이동 및 축소 */
+    opacity: 0;
 }
 
+/* 회원가입 모드에서 로그인 모드로 전환 */
+.login-container.animating.signup-mode {
+    transform: translateY(150%) scale(0.75); /* 아래로 이동 및 축소 */
+    opacity: 0;
+}
+
+/* 애니메이션 종료 후 새 모드에서 상태 복귀 */
+.login-container.login-mode,
 .login-container.signup-mode {
-    transform: translateX(0); /* 회원가입 상태 기본 위치 */
+    transform: translateY(0) scale(1); /* 위치 복구 및 크기 정상화 */
+    opacity: 1; /* 투명도 복구 */
 }
 
 
