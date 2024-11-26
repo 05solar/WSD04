@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import '../styles/SignIn.css';
 
 const SignIn = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [animating, setAnimating] = useState(false);
+    const navigate = useNavigate(); 
 
     const toggleMode = () => {
         setAnimating(true);
@@ -11,6 +13,11 @@ const SignIn = () => {
             setIsLogin(!isLogin);
             setAnimating(false);
         }, 500);
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        navigate('/main'); 
     };
 
     return (
@@ -47,7 +54,7 @@ const SignIn = () => {
                     style={{
                         position: 'relative',
                         top: '0%',
-                        left: '-1%',
+                        left: '0%',
                         zIndex: 1,
                     }}
                 >

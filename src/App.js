@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignIn from './pages/SignIn';
+import MainPage from './pages/MainPage';
 
-function App() {
+const App = () => {
     return (
         <Router>
             <Routes>
-                {/* 기본 경로 ("/")에 SignIn 컴포넌트 매핑 */}
                 <Route path="/" element={<SignIn />} />
-                <Route path="/signin" element={<SignIn />} />
+                <Route path="/main" element={<MainPage />} />
             </Routes>
         </Router>
     );
-}
+};
 
 export default App;

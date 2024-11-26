@@ -32,7 +32,7 @@ body {
     background-color: #fffffff1;
     padding: 2rem;
     width: 90%; /* 반응형 변경 */
-    min-width: 400px;
+    min-width: 300px;
     max-width: 0px;
     min-height: 400px; /* 로그인/회원가입 공통 최소 높이 설정 */
     border-radius: 12px;
@@ -345,17 +345,17 @@ button {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     .login-container {
-        padding: 1.5rem; /* 컨테이너 패딩 감소 */
+        padding: 1.0rem; /* 컨테이너 패딩 감소 */
     }
 
     h2 {
-        font-size: 1rem; /* 제목 크기 감소 */
+        font-size: 1.7rem; /* 제목 크기 감소 */
     }
 
     .subtitle {
-        font-size: 0.75rem; /* 부제목 크기 감소 */
+        font-size: 0.8rem; /* 부제목 크기 감소 */
     }
 
     input[type="text"],
@@ -364,7 +364,7 @@ button {
     }
 
     button {
-        font-size: 0.75rem; /* 버튼 폰트 크기 감소 */
+        font-size: 0.9rem; /* 버튼 폰트 크기 감소 */
         padding: 0.3rem; /* 버튼 패딩 감소 */
     }
 }
