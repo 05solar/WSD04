@@ -1,4 +1,4 @@
-/* 기본 스타일 초기화 */
+/* 기존 스타일 유지 */
 body {
     display: flex;
     justify-content: center;
@@ -8,23 +8,26 @@ body {
     font-family: "Roboto Condensed", sans-serif;
     margin: 0;
     padding: 0;
+    perspective: 2000px; /* 원근감 깊게 */
 }
 
 /* 메인 컨테이너 스타일 */
 .login-container {
     background-color: #ffffff;
     padding: 2rem;
-    width: 90%; /* 반응형 변경 */
-    min-width :400px;
+    width: 90%;
+    min-width: 400px;
     max-width: 650px;
-    min-height: 400px; /* 로그인/회원가입 공통 최소 높이 설정 */
+    min-height: 400px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     position: relative;
-    transition: min-height 0.3s ease; /* 전환 시 부드러운 애니메이션 */
+    transition: transform 0.8s, opacity 0.8s, visibility 0.8s;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: center center; /* 정확히 중앙을 회전 중심으로 */
 }
-
 
 /* 상단 바 스타일 */
 .login-container::before {
@@ -38,36 +41,43 @@ body {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
-/* 애니메이션 효과 추가 */
-.login-container {
-    transition: transform 0.5s ease, opacity 0.5s ease; /* 애니메이션 효과 */
-    transform: scale(1); /* 기본 크기 */
-    opacity: 1; /* 기본 투명도 */
-}
 
+/* 3D 전환 애니메이션 효과 */
 .login-container.animating {
-    transform: scale(0.95); /* 전환 중 축소 */
-    opacity: 0; /* 전환 중 투명도 감소 */
+    transform: 
+        perspective(2000px) 
+        rotateY(180deg) /* Y축 중심 반바퀴 회전 */
+        scale(0.9); /* 약간 축소 */
+    opacity: 0.5; /* 더 강조된 페이딩 */
 }
 
 /* 로그인 모드에서 회원가입 모드로 전환 */
 .login-container.animating.login-mode {
-    transform: translateY(-150%) scale(0.75); /* 위로 이동 및 축소 */
-    opacity: 0;
+    transform: 
+        perspective(2000px) 
+        rotateY(180deg)
+        scale(0.9);
 }
 
 /* 회원가입 모드에서 로그인 모드로 전환 */
 .login-container.animating.signup-mode {
-    transform: translateY(150%) scale(0.75); /* 아래로 이동 및 축소 */
-    opacity: 0;
+    transform: 
+        perspective(2000px) 
+        rotateY(-180deg)
+        scale(0.9);
 }
 
-/* 애니메이션 종료 후 새 모드에서 상태 복귀 */
+/* 애니메이션 종료 후 상태 복귀 */
 .login-container.login-mode,
 .login-container.signup-mode {
-    transform: translateY(0) scale(1); /* 위치 복구 및 크기 정상화 */
-    opacity: 1; /* 투명도 복구 */
+    transform: 
+        perspective(2000px) 
+        rotateY(0deg) 
+        scale(1);
+    opacity: 1;
+    visibility: visible;
 }
+
 
 
 /* 제목 스타일 */
