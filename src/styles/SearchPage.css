@@ -1,30 +1,177 @@
-/* SearchPage.css */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .search-page {
-    padding: 20px;
-  }
-  
-  .filters {
-    margin-bottom: 20px;
-  }
-  
-  .filters select,
-  .filters button {
-    margin-right: 10px;
-    padding: 10px;
-  }
-  
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #700c11;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.logo {
+  font-size: 34px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+  transition: transform 1s ease, color 1s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(360deg);
+  color: #000000;
+  cursor: pointer;
+}
+
+.menu {
+  font-size: 20px;
+  font-weight: 500;
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  margin: 15px 0;
+  cursor: pointer;
+  color: #fff;
+}
+
+.menu li:hover {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+.content {
+  margin-left: 250px;
+  width: calc(100% - 0px);
+  background-color: #f0f0f0;
+  padding: 50px;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* 토글 메뉴 중앙 배치 및 사이즈 조정 */
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  margin-right: 120px;
+  font-size: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filters select {
+  padding: 8px;
+  width: 230px;
+  font-size: 25px;
+  font-weight: 500;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.filters select:focus {
+  border-color: #81090f;
+  outline: none;
+}
+
+.filters button {
+  padding: 8px 12px; 
+  width: 100px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #81090f;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #c21922;
+  transform: scale(1.05);
+}
+
+.filters button:active {
+  transform: scale(0.95);
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.movie-card {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  height: 380px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card .poster {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.movie-info {
+  padding: 10px;
+}
+
+.movie-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* 반응형 설정 */
+@media screen and (max-width: 1024px) {
   .movie-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  .movie-card {
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    transition: transform 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .movie-list {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
+}
+
+@media screen and (max-width: 480px) {
+  .movie-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
