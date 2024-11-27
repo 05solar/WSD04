@@ -1,4 +1,3 @@
-/* HomePage.js */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { throttle } from 'lodash';
@@ -14,7 +13,7 @@ const HomePage = () => {
     return JSON.parse(localStorage.getItem('likedMovies')) || [];
   });
 
-  const navigate = useNavigate(); // navigate 훅 추가
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -22,12 +21,15 @@ const HomePage = () => {
 
       setIsLoading(true);
       try {
-        const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=ko-KR&page=${page}&sort_by=popularity.desc&with_watch_providers=providers%253A8`, {
-          headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMGFhMzI0ZTlkYjViYmRkNzM1NTdhMzk0MjY5MjU4MiIsIm5iZiI6MTczMjY5NDkxMS43MzE3MjcsInN1YiI6IjY3NDM1MDI0NjM3MGVjYWQzZjAwMDY1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.J8mYHb0oEpusJq71VOPNUHo2d-LyTNopStP9e5wWFmc'
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=false&language=ko-KR&page=${page}&sort_by=popularity.desc&with_watch_providers=providers%253A8`,
+          {
+            headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer YOUR_API_KEY_HERE',
+            },
           }
-        });
+        );
 
         if (response.data.results.length === 0) {
           setHasMore(false);
@@ -70,12 +72,14 @@ const HomePage = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   return (
     <div className="home-page">
       <div className="sidebar">
-        <h1 className="logo" onClick={() => navigate('/home')}>NOTFLIX</h1>
+        <h1 className="logo" onClick={() => navigate('/home')}>
+          NOTFLIX
+        </h1>
         <ul className="menu">
           <li onClick={() => navigate('/home')}>홈</li>
           <li onClick={() => navigate('/popular')}>대세 콘텐츠</li>
@@ -87,15 +91,21 @@ const HomePage = () => {
         <div className="movie-list">
           {movies.map((movie) => (
             <div key={movie.id} className="movie-card">
+              <button className="like-button" onClick={() => toggleLike(movie)}>
+                {likedMovies.some((m) => m.id === movie.id) ? '💖' : '🤍'}
+              </button>
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="poster"
               />
               <h3 className="movie-title">{movie.title}</h3>
-              <button className="like-button" onClick={() => toggleLike(movie)}>
-                {likedMovies.some((m) => m.id === movie.id) ? '💖' : '🤍'}
-              </button>
+              {/* 별점 내용을 삭제했습니다 */}
+              {/* 호버 시 나타나는 오버레이 */}
+              <div className="overlay">
+                <p className="movie-overview">{movie.overview}</p>
+                <p className="movie-rating">평점: {movie.vote_average}/10</p>
+              </div>
             </div>
           ))}
         </div>
