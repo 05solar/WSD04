@@ -77,7 +77,7 @@ html {
   background-color: #81090f;
   border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 그림자 추가로 부드러운 느낌 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
@@ -93,16 +93,16 @@ html {
 
 .view-toggle[data-mode='tile'] .toggle-switch {
   transform: translateX(0);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 타일 모드일 때 그림자 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .view-toggle[data-mode='list'] .toggle-switch {
   transform: translateX(100%);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 리스트 모드일 때 그림자 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-switch:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* 호버시 좀 더 깊은 그림자 */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .toggle-labels {
@@ -118,11 +118,10 @@ html {
 }
 
 .view-toggle:hover .toggle-labels {
-  color: #ffcccc; /* 토글 전체에 호버 시 텍스트 색상 살짝 변경 */
+  color: #ffcccc;
 }
 
-
-/* Tile View Styles */
+/* 타일형 뷰 스타일 */
 .movie-list.tile {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -158,10 +157,42 @@ html {
   color: #555;
 }
 
-/* List View Styles */
+/* 무한 스크롤 컨테이너 */
+.infinite-scroll-container {
+  position: relative;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+/* go-to-top 버튼 스타일 수정 */
+.go-to-top {
+  position: fixed;
+  top: 30px; /* 상단에 위치 */
+  right: 30px;
+  height: 50px;
+  width: 50px;
+  background-color: #81090f;
+  color: #fff;
+  border: none;
+  border-radius: 50%; /* 원형으로 만들기 */
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+
+.go-to-top:hover {
+  background-color: #700c11;
+}
+
+/* 액자형 뷰 스타일 */
 .list-view-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -231,7 +262,6 @@ html {
   margin: 0px;
   border-radius: 40px;
   background-size: auto 100%;
-  
 }
 
 .card-item.card-item--active .shadow-overlay {
@@ -358,4 +388,32 @@ html {
 .card-item .emoji-box {
   color: white;
   font-size: 1rem;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  background-color: #81090f;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 1.2rem;
 }
