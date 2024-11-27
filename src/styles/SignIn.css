@@ -273,6 +273,41 @@ button {
     background: linear-gradient(90deg, #0030dd, #ffa9a1); /* 테두리 색상 변경 */
 }
 
+/* Remember me 및 약관 동의 체크박스 스타일 추가 */
+.remember-me,
+.terms {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  justify-content: center; /* 중앙 정렬 */
+}
+
+.remember-me label,
+.terms label {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* 체크박스 스타일 */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* Toast 메시지 스타일 */
+.Toastify__toast {
+  border-radius: 8px;
+}
+
+.Toastify__toast--success {
+  background: #28a745;
+}
+
+.Toastify__toast--error {
+  background: #dc3545;
+}
+
 /* 애니메이션 링 스타일 추가 */
 .aneis {
     position: fixed;
