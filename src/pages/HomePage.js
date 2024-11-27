@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { throttle } from 'lodash';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 추가
 import '../styles/HomePage.css';
 
 const HomePage = () => {
@@ -14,6 +14,18 @@ const HomePage = () => {
   });
 
   const navigate = useNavigate();
+  const location = useLocation(); // 현재 경로 확인을 위한 useLocation 사용
+
+  // 메뉴 아이템 배열 생성
+  const menuItems = [
+    { name: '홈', path: '/home', onClick: () => navigate('/home') },
+    { name: '대세 콘텐츠', path: '/popular', onClick: () => navigate('/popular') },
+    { name: '찾아보기', path: '/search', onClick: () => navigate('/search') },
+    { name: '내가찜한리스트', path: '/like', onClick: () => navigate('/like') },
+  ];
+
+  // 현재 활성화된 메뉴의 인덱스 계산
+  const activeIndex = menuItems.findIndex((item) => item.path === location.pathname);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -26,7 +38,7 @@ const HomePage = () => {
           {
             headers: {
               accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMGFhMzI0ZTlkYjViYmRkNzM1NTdhMzk0MjY5MjU4MiIsIm5iZiI6MTczMjY5NDkxMS43MzE3MjcsInN1YiI6IjY3NDM1MDI0NjM3MGVjYWQzZjAwMDY1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.J8mYHb0oEpusJq71VOPNUHo2d-LyTNopStP9e5wWFmc'
+              Authorization: 'Bearer YOUR_API_KEY_HERE', // 실제 API 키로 교체 필요
             },
           }
         );
@@ -81,10 +93,15 @@ const HomePage = () => {
           NOTFLIX
         </h1>
         <ul className="menu">
-          <li onClick={() => navigate('/home')}>홈</li>
-          <li onClick={() => navigate('/popular')}>대세 콘텐츠</li>
-          <li onClick={() => navigate('/search')}>찾아보기</li>
-          <li onClick={() => navigate('/like')}>내가찜한리스트</li>
+          {menuItems.map((item, index) => (
+            <li
+              key={index}
+              className={activeIndex === index ? 'active' : ''}
+              onClick={item.onClick}
+            >
+              {item.name}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="content">
@@ -100,8 +117,6 @@ const HomePage = () => {
                 className="poster"
               />
               <h3 className="movie-title">{movie.title}</h3>
-              {/* 별점 내용을 삭제했습니다 */}
-              {/* 호버 시 나타나는 오버레이 */}
               <div className="overlay">
                 <p className="movie-overview">{movie.overview}</p>
                 <p className="movie-rating">평점: {movie.vote_average}/10</p>

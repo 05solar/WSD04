@@ -1,4 +1,6 @@
-body, html {
+/* 기존 스타일 유지 */
+body,
+html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -43,9 +45,11 @@ body, html {
   font-weight: 500;
   list-style: none;
   padding: 0;
+  position: relative; /* 추가 */
 }
 
 .menu li {
+  position: relative; /* 추가 */
   margin: 15px 0;
   cursor: pointer;
   color: #fff;
@@ -57,6 +61,26 @@ body, html {
   color: #000;
 }
 
+/* 활성화된 메뉴 아이템 스타일 */
+.menu li.active {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* 활성화된 메뉴 아이템에 선 추가 */
+.menu li.active::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+/* 콘텐츠 스타일 */
 .content {
   margin-left: 250px;
   width: calc(100% - 250px);

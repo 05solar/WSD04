@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 추가
 import '../styles/SearchPage.css';
 
 const SearchPage = () => {
@@ -11,6 +11,18 @@ const SearchPage = () => {
   const [language, setLanguage] = useState('');
 
   const navigate = useNavigate();
+  const location = useLocation(); // 현재 경로를 확인하기 위한 useLocation 사용
+
+  // 메뉴 아이템 배열 생성
+  const menuItems = [
+    { name: '홈', path: '/home', onClick: () => navigate('/home') },
+    { name: '대세 콘텐츠', path: '/popular', onClick: () => navigate('/popular') },
+    { name: '찾아보기', path: '/search', onClick: () => navigate('/search') },
+    { name: '내가찜한리스트', path: '/like', onClick: () => navigate('/like') },
+  ];
+
+  // 현재 활성화된 메뉴의 인덱스 계산
+  const activeIndex = menuItems.findIndex((item) => item.path === location.pathname);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -23,7 +35,7 @@ const SearchPage = () => {
               headers: {
                 accept: 'application/json',
                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMGFhMzI0ZTlkYjViYmRkNzM1NTdhMzk0MjY5MjU4MiIsIm5iZiI6MTczMjY5NDkxMS43MzE3MjcsInN1YiI6IjY3NDM1MDI0NjM3MGVjYWQzZjAwMDY1MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.J8mYHb0oEpusJq71VOPNUHo2d-LyTNopStP9e5wWFmc'
-              }
+              },
             }
           );
           allMovies = [...allMovies, ...response.data.results];
@@ -41,10 +53,10 @@ const SearchPage = () => {
   const handleFilter = () => {
     let updatedMovies = movies;
     if (genre) {
-      updatedMovies = updatedMovies.filter(movie => (genre === '성인' ? movie.adult : !movie.adult));
+      updatedMovies = updatedMovies.filter((movie) => (genre === '성인' ? movie.adult : !movie.adult));
     }
     if (rating) {
-      updatedMovies = updatedMovies.filter(movie => {
+      updatedMovies = updatedMovies.filter((movie) => {
         const avg = movie.vote_average;
         if (rating === '9-10') return avg >= 9 && avg <= 10;
         if (rating === '8-9') return avg >= 8 && avg < 9;
@@ -57,7 +69,9 @@ const SearchPage = () => {
       });
     }
     if (language) {
-      updatedMovies = updatedMovies.filter(movie => (language === '' ? true : movie.original_language === language));
+      updatedMovies = updatedMovies.filter((movie) =>
+        language === '' ? true : movie.original_language === language
+      );
     }
     setFilteredMovies(updatedMovies);
   };
@@ -72,12 +86,19 @@ const SearchPage = () => {
   return (
     <div className="search-page">
       <div className="sidebar">
-        <h1 className="logo" onClick={() => navigate('/home')}>NOTFLIX</h1>
+        <h1 className="logo" onClick={() => navigate('/home')}>
+          NOTFLIX
+        </h1>
         <ul className="menu">
-          <li onClick={() => navigate('/home')}>홈</li>
-          <li onClick={() => navigate('/popular')}>대세 콘텐츠</li>
-          <li onClick={() => navigate('/search')}>찾아보기</li>
-          <li onClick={() => navigate('/like')}>내가찜한리스트</li>
+          {menuItems.map((item, index) => (
+            <li
+              key={index}
+              className={activeIndex === index ? 'active' : ''}
+              onClick={item.onClick}
+            >
+              {item.name}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="content">

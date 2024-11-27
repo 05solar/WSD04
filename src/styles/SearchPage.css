@@ -47,10 +47,28 @@ html {
 }
 
 .menu li {
+  position: relative;
   margin: 15px 0;
   cursor: pointer;
   color: #fff;
 }
+.menu li.active {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+}
+
+.menu li.active::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
 
 .menu li:hover {
   font-size: 22px;
