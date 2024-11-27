@@ -1,5 +1,5 @@
-/* PopularPage.css */
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -62,13 +62,13 @@ body, html {
   margin-left: 250px;
   width: calc(100% - 250px);
   background-color: #f0f0f0;
-  padding: 20px; /* 줄임 */
+  padding: 20px;
   min-height: 100vh;
   overflow-y: auto;
 }
 
 .view-toggle {
-  margin: 20px auto; /* 중앙 정렬 및 상단 간격 조정 */
+  margin: 20px auto;
   display: flex;
   align-items: center;
   position: relative;
@@ -77,6 +77,8 @@ body, html {
   background-color: #e50914;
   border-radius: 20px;
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 그림자 추가로 부드러운 느낌 */
+  overflow: hidden;
 }
 
 .toggle-switch {
@@ -85,15 +87,22 @@ body, html {
   height: 100%;
   background-color: #fff;
   border-radius: 20px;
-  transition: all 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.3s ease;
+  will-change: transform;
 }
 
-.view-toggle[data-mode="tile"] .toggle-switch {
-  left: 0;
+.view-toggle[data-mode='tile'] .toggle-switch {
+  transform: translateX(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 타일 모드일 때 그림자 */
 }
 
-.view-toggle[data-mode="list"] .toggle-switch {
-  left: 50%;
+.view-toggle[data-mode='list'] .toggle-switch {
+  transform: translateX(100%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 리스트 모드일 때 그림자 */
+}
+
+.toggle-switch:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* 호버시 좀 더 깊은 그림자 */
 }
 
 .toggle-labels {
@@ -105,66 +114,248 @@ body, html {
   font-weight: bold;
   z-index: 1;
   position: relative;
+  transition: color 0.3s ease;
 }
 
+.view-toggle:hover .toggle-labels {
+  color: #ffcccc; /* 토글 전체에 호버 시 텍스트 색상 살짝 변경 */
+}
+
+
+/* Tile View Styles */
 .movie-list.tile {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 */
-  gap: 10px; /* 간격 최소화 */
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
-.movie-list.list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개 */
-  gap: 20px;
-}
-
-.movie-card {
+.movie-card.tile {
   background-color: #fff;
-  padding: 10px; /* 줄임 */
+  padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px; /* 상단에서 띄워놓기 */
-}
-
-.movie-card.list {
-  width: 400px;
-  height: 150p;
-  padding: 10px; /* 줄임 */
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
 }
 
-/* Movie card elements for both tile and list views */
-.movie-card .poster {
+.movie-card.tile .poster {
   width: 100%;
   height: 250px;
   object-fit: cover;
   border-radius: 10px;
-  margin-bottom: 10px;
 }
 
-.movie-card.list .poster {
-  width: 50%;
-  height: 125px; /* 타일형의 절반 */
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
+.movie-card.tile .movie-info {
+  padding: 10px;
 }
 
-.movie-card .movie-title {
+.movie-card.tile .movie-title {
   font-size: 1.2rem;
   margin: 5px 0;
-  padding: 0 10px;
-  flex-grow: 1;
 }
 
-.movie-card .star-rating {
+.movie-card.tile .movie-rating {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* List View Styles */
+.list-view-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.general-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
+  min-width: 1400px;
+  max-width: 1900px;
+  width: calc(100% - 100px);
+  height: 700px;
+}
+
+@media screen and (max-width: 718px) {
+  .general-container {
+    min-width: 520px;
+  }
+  .general-container .card-item:nth-child(5) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 638px) {
+  .general-container {
+    min-width: 440px;
+  }
+  .general-container .card-item:nth-child(4) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 558px) {
+  .general-container {
+    min-width: 360px;
+  }
+  .general-container .card-item:nth-child(3) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 478px) {
+  .general-container {
+    min-width: 280px;
+  }
+  .general-container .card-item:nth-child(2) {
+    display: none;
+  }
+}
+
+.card-item {
+  position: relative;
+  overflow: hidden;
+  min-width: 60px;
+  margin: 10px;
+  background-image: var(--backgroundImage);
+  background-size: auto 120%;
+  background-position: center;
+  cursor: pointer;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.card-item.card-item--active {
+  flex-grow: 10000;
+  transform: scale(1);
+  max-width: 600px;
+  margin: 0px;
+  border-radius: 40px;
+  background-size: auto 100%;
+  
+}
+
+.card-item.card-item--active .shadow-overlay {
+  box-shadow: inset 0 -120px 120px -120px black, inset 0 -120px 120px -100px black;
+}
+
+.card-item.card-item--active .emoji-box {
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+.card-item.card-item--active .titles-box > div {
+  left: 0px;
+  opacity: 1;
+  z-index: 2;
+}
+
+.card-item:not(.card-item--active) {
+  flex-grow: 1;
+  border-radius: 30px;
+  position: relative;
+}
+
+.card-item:not(.card-item--active)::after {
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.63);
+}
+
+.card-item:not(.card-item--active) .shadow-overlay {
+  bottom: -40px;
+  box-shadow: inset 0 -120px 0px -120px black, inset 0 -120px 0px -100px black;
+}
+
+.card-item:not(.card-item--active) .emoji-box {
+  bottom: 10px;
+  left: 10px;
+}
+
+.card-item:not(.card-item--active) .titles-box > div {
+  left: 20px;
+  opacity: 0;
+}
+
+.card-item .shadow-overlay {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 120px;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.card-item .emoji-box {
+  display: flex;
+  position: absolute;
+  right: 0px;
+  height: 40px;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.titles-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  color: white;
+  white-space: pre-wrap;
+}
+
+.titles-box > div {
+  position: relative;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity 0.5s ease-out;
+}
+
+.titles-box--title {
+  font-weight: bold;
   font-size: 1.2rem;
-  color: #ffa500;
-  margin-bottom: 10px;
+}
+
+.titles-box--subtitle {
+  transition-delay: 0.1s;
+}
+
+.movie-details {
+  margin-top: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card-item:not(.card-item--active) .movie-details {
+  opacity: 0;
+}
+
+.shadow-overlay {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 120px;
+  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.card-item .titles-box {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+}
+
+.card-item .titles-box > div {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card-item.card-item--active .titles-box > div {
+  opacity: 1;
+}
+
+.card-item .emoji-box {
+  color: white;
+  font-size: 1rem;
 }
