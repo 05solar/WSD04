@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import '../styles/SignIn.css';
 
 const SignIn = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [animating, setAnimating] = useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const toggleMode = () => {
         setAnimating(true);
@@ -16,8 +16,8 @@ const SignIn = () => {
     };
 
     const handleLogin = (e) => {
-        e.preventDefault();
-        navigate('/main'); 
+        e.preventDefault(); // 기본 동작 방지
+        navigate('/main'); // main 페이지로 이동
     };
 
     return (
@@ -58,7 +58,6 @@ const SignIn = () => {
                         zIndex: 1,
                     }}
                 >
-                    {/* 기존 로그인 폼 내용 그대로 유지 */}
                     <h2>{isLogin ? 'LOGIN' : 'SIGN UP'}</h2>
                     <p className="subtitle">
                         {isLogin
@@ -66,12 +65,13 @@ const SignIn = () => {
                             : 'Create your account for netflix demo'}
                     </p>
 
-                    <form>
+                    {/* form에 onSubmit 연결 */}
+                    <form onSubmit={handleLogin}>
                         <label htmlFor="email">{isLogin ? 'EMAIL' : 'ENTER YOUR EMAIL'}</label>
-                        <input type="text" id="email" placeholder="Email" />
+                        <input type="text" id="email" placeholder="Email" required />
 
                         <label htmlFor="password">PASSWORD</label>
-                        <input type="password" id="password" placeholder="Password" />
+                        <input type="password" id="password" placeholder="Password" required />
 
                         {!isLogin && (
                             <>
@@ -80,6 +80,7 @@ const SignIn = () => {
                                     type="password"
                                     id="confirm-password"
                                     placeholder="Confirm Password"
+                                    required
                                 />
                             </>
                         )}
@@ -97,7 +98,7 @@ const SignIn = () => {
                         )}
 
                         <button className="login-btn" type="submit">
-                            {isLogin ? 'LOGIN' : 'SIGN UP'}
+                            LOGIN
                         </button>
                     </form>
 
