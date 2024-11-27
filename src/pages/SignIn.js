@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 import '../styles/SignIn.css';
 
 const SignIn = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [animating, setAnimating] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     const toggleMode = () => {
         setAnimating(true);
@@ -16,8 +16,8 @@ const SignIn = () => {
     };
 
     const handleLogin = (e) => {
-        e.preventDefault(); // 기본 동작 방지
-        navigate('/main'); // main 페이지로 이동
+        e.preventDefault();
+        navigate('/main'); 
     };
 
     return (
@@ -36,7 +36,7 @@ const SignIn = () => {
                     width: '100%',
                     height: '100%',
                     zIndex: -1,
-                    filter: 'brightness(0.2)',
+                    filter: 'brightness(0.35)',
                 }}
             ></div>
 
@@ -58,29 +58,28 @@ const SignIn = () => {
                         zIndex: 1,
                     }}
                 >
-                    <h2>{isLogin ? 'LOGIN' : 'SIGN UP'}</h2>
+                    {/* 기존 로그인 폼 내용 그대로 유지 */}
+                    <h2>{isLogin ? '로그인' : '회원가입'}</h2>
                     <p className="subtitle">
                         {isLogin
-                            ? 'Login page for netflix demo'
-                            : 'Create your account for netflix demo'}
+                            ? '넷플릭스 데모 사이트를 위한 로그인 페이지'
+                            : '넷플릭스 데모 사이트를 위한 회원가입 페이지'}
                     </p>
 
-                    {/* form에 onSubmit 연결 */}
-                    <form onSubmit={handleLogin}>
-                        <label htmlFor="email">{isLogin ? 'EMAIL' : 'ENTER YOUR EMAIL'}</label>
-                        <input type="text" id="email" placeholder="Email" required />
+                    <form>
+                        <label htmlFor="email">{isLogin ? '이메일' : '이메일을 입력하시오'}</label>
+                        <input type="text" id="email" placeholder="email@example.com" />
 
-                        <label htmlFor="password">PASSWORD</label>
-                        <input type="password" id="password" placeholder="Password" required />
+                        <label htmlFor="password">비밀번호</label>
+                        <input type="password" id="password" placeholder="비밀번호 입력" />
 
                         {!isLogin && (
                             <>
-                                <label htmlFor="confirm-password">CONFIRM PASSWORD</label>
+                                <label htmlFor="confirm-password">비밀번호 확인</label>
                                 <input
                                     type="password"
                                     id="confirm-password"
-                                    placeholder="Confirm Password"
-                                    required
+                                    placeholder="비밀번호 재입력"
                                 />
                             </>
                         )}
@@ -93,17 +92,17 @@ const SignIn = () => {
                                     alert('>아직 구현하지 못한 기능입니다<');
                                 }}
                             >
-                                FORGOT YOUR PASSWORD?
+                                비밀번호를 잊으셨나요?
                             </button>
                         )}
 
                         <button className="login-btn" type="submit">
-                            LOGIN
+                            {isLogin ? '확인' : '회원가입 하기'}
                         </button>
                     </form>
 
                     <button className="signup-btn" onClick={toggleMode}>
-                        {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+                        {isLogin ? '계정이 없나요?' : '계정이 있습니다'}
                     </button>
                 </div>
             </div>
