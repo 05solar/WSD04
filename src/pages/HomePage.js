@@ -15,7 +15,7 @@ const HomePage = () => {
       try {
         const response = await axios.get(`https://api.themoviedb.org/3/discover/movie`, {
           params: {
-            api_key: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMGFhMzI0ZTlkYjViYmRkNzM1NTdhMzk0MjY5MjU4MiIsIm5iZiI6MTczMjY3ODkwMC44NTI0OTczLCJzdWIiOiI2NzQzNTAyNDYzNzBlY2FkM2YwMDA2NTMiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.lQk93HyHdAsF66XKuMx00SLGzm3mn6Hae1AD5V-f-5g', // 실제 API 키로 변경
+            api_key: 'my api key', // 실제 API 키로 변경
             page: page,
           },
         });
