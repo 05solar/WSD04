@@ -1,3 +1,4 @@
+// SignIn.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../styles/SignIn.css';
@@ -17,7 +18,7 @@ const SignIn = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        navigate('/main'); 
+        navigate('/home'); 
     };
 
     return (
@@ -66,7 +67,7 @@ const SignIn = () => {
                             : '넷플릭스 데모 사이트를 위한 회원가입 페이지'}
                     </p>
 
-                    <form>
+                    <form onSubmit={handleLogin}>
                         <label htmlFor="email">{isLogin ? '이메일' : '이메일을 입력하시오'}</label>
                         <input type="text" id="email" placeholder="email@example.com" />
 
@@ -91,9 +92,11 @@ const SignIn = () => {
                                     e.preventDefault();
                                     alert('>아직 구현하지 못한 기능입니다<');
                                 }}
-                            >
-                                비밀번호를 잊으셨나요?
-                            </button>
+                                style={{ background: 'none', border: 'none' }} // 명확하게 배경 제거
+                                >
+                                    비밀번호를 잊으셨나요?
+                                </button>
+
                         )}
 
                         <button className="login-btn" type="submit">
