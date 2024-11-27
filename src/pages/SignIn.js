@@ -63,8 +63,8 @@ const SignIn = () => {
                     <h2>{isLogin ? '로그인' : '회원가입'}</h2>
                     <p className="subtitle">
                         {isLogin
-                            ? '넷플릭스 데모 사이트를 위한 로그인 페이지'
-                            : '넷플릭스 데모 사이트를 위한 회원가입 페이지'}
+                            ? '낫플릭스 사용자를 위한 로그인 페이지'
+                            : '낫플릭스 사용자를 위한 회원가입 페이지'}
                     </p>
 
                     <form onSubmit={handleLogin}>
