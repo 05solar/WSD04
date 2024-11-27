@@ -26,15 +26,26 @@ body, html {
 }
 
 .logo {
-  font-size: 35px;
+  font-size: 34px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #ffffff;
+  transition: transform 1s ease, color 1s ease;
+  
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(360deg);
   color: #000000;
+  cursor: pointer;
 }
 
 .menu {
+  font-size: 20px;
+  font-weight: 500;
   list-style: none;
   padding: 0;
+
 }
 
 .menu li {
@@ -44,6 +55,8 @@ body, html {
 }
 
 .menu li:hover {
+  font-size: 22px;
+  font-weight: bold;
   color: #000;
 }
 
@@ -82,8 +95,8 @@ body, html {
 
 .movie-title {
   font-size: 1.2rem;
-  margin: 5px 0;
-  padding: 0 5px;
+  margin: 10px 0;
+  padding: 0 10px;
   flex-grow: 1;
 }
 

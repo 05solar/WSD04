@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { throttle } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css';
 
 const HomePage = () => {
@@ -12,6 +13,8 @@ const HomePage = () => {
   const [likedMovies, setLikedMovies] = useState(() => {
     return JSON.parse(localStorage.getItem('likedMovies')) || [];
   });
+
+  const navigate = useNavigate(); // navigate 훅 추가
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -72,12 +75,12 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <div className="sidebar">
-        <h1 className="logo">NOTFLIX</h1>
+        <h1 className="logo" onClick={() => navigate('/home')}>NOTFLIX</h1>
         <ul className="menu">
-          <li>홈</li>
-          <li>대세 콘텐츠</li>
-          <li>찾아보기</li>
-          <li>내가찜한리스트</li>
+          <li onClick={() => navigate('/home')}>홈</li>
+          <li onClick={() => navigate('/popular')}>대세 콘텐츠</li>
+          <li onClick={() => navigate('/search')}>찾아보기</li>
+          <li onClick={() => navigate('/like')}>내가찜한리스트</li>
         </ul>
       </div>
       <div className="content">
