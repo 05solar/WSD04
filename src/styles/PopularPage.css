@@ -127,17 +127,16 @@ body, html {
   display: flex;
   flex-direction: column;
   margin-top: 20px; /* 상단에서 띄워놓기 */
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
 }
 
 .movie-card.list {
-  grid-column: span 2;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px;
+  width: 400px;
+  height: 150p;
+  padding: 10px; /* 줄임 */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 /* Movie card elements for both tile and list views */
@@ -152,21 +151,9 @@ body, html {
 .movie-card.list .poster {
   width: 50%;
   height: 125px; /* 타일형의 절반 */
-  margin-right: 20px;
-}
-
-.movie-card.list .movie-title {
-  text-align: left;
-  margin-left: 20px;
-  margin-bottom: 0;
-  padding: 0;
-  flex-grow: 1;
-}
-
-.movie-card.list .star-rating {
-  text-align: left;
-  margin-left: 20px;
-  margin-top: 5px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .movie-card .movie-title {
@@ -180,35 +167,4 @@ body, html {
   font-size: 1.2rem;
   color: #ffa500;
   margin-bottom: 10px;
-}
-
-/* Animation and overlay styles for list view */
-.movie-card .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.movie-card:hover .overlay {
-  opacity: 1;
-}
-
-.overlay .overview {
-  font-size: 0.9rem;
-  margin: 10px;
-}
-
-.overlay .vote-info {
-  font-size: 1rem;
-  margin: 5px;
 }

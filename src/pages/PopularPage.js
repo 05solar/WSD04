@@ -11,7 +11,6 @@ const PopularPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetching the movies
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
@@ -23,8 +22,7 @@ const PopularPage = () => {
             }
           }
         );
-        // Limit to 5 movies initially
-        setMovies(response.data.results.slice(0, 5));
+        setMovies(response.data.results);
       } catch (error) {
         console.error('Failed to fetch movies', error);
       }
@@ -33,7 +31,6 @@ const PopularPage = () => {
     fetchMovies();
   }, []);
 
-  // Toggle between tile and list view
   const toggleViewMode = () => {
     setViewMode((prevMode) => (prevMode === 'tile' ? 'list' : 'tile'));
   };
@@ -72,14 +69,6 @@ const PopularPage = () => {
               <div className="movie-info">
                 <h3 className="movie-title">{movie.title}</h3>
                 <p className="movie-rating">평점: {movie.vote_average}/10</p>
-              </div>
-              {/* Add overlay with additional movie details */}
-              <div className="overlay">
-                <p className="overview">{movie.overview}</p>
-                <div className="vote-info">
-                  <p>평점: {movie.vote_average}</p>
-                  <p>투표수: {movie.vote_count}</p>
-                </div>
               </div>
             </div>
           ))}
