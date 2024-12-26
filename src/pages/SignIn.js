@@ -1,9 +1,11 @@
+// src/pages/SignIn.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify'; // ToastContainer 추가
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/SignIn.css';
+import { loadKakaoSdk } from '../utils/loadKakaoSdk'; // 올바른 경로로 수정
 
 const SignIn = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -24,6 +26,21 @@ const SignIn = () => {
       setEmail(storedEmail);
       setRememberMe(true);
     }
+
+    // Kakao SDK 동적 로드 및 초기화
+    loadKakaoSdk()
+      .then((Kakao) => {
+        if (!Kakao.isInitialized()) {
+          Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+          console.log('Kakao SDK Initialized:', Kakao.isInitialized());
+        } else {
+          console.log('Kakao SDK already initialized.');
+        }
+      })
+      .catch((error) => {
+        console.error('Kakao SDK 로딩 오류:', error);
+        toast.error('카카오 SDK 로딩에 실패했습니다.');
+      });
   }, []);
 
   const toggleMode = () => {
@@ -46,9 +63,10 @@ const SignIn = () => {
     if (storedUser && storedUser.email === email && storedUser.password === password) {
       // TMDB API 호출하여 로그인 검증 (비밀번호를 API 키로 사용)
       try {
+        const tmdbApiKey = process.env.REACT_APP_TMDB_API_KEY;
         await axios.get('https://api.themoviedb.org/3/movie/550', {
           headers: {
-            Authorization: `Bearer ${password}`,
+            Authorization: `Bearer ${tmdbApiKey}`,
           },
         });
         // 로그인 성공 처리
@@ -61,7 +79,7 @@ const SignIn = () => {
         localStorage.setItem('isLoggedIn', 'true');
         navigate('/home');
       } catch (error) {
-        toast.error('API 키가 유효하지 않습니다.');
+        toast.error('TMDB API 키가 유효하지 않습니다.');
       }
     } else {
       toast.error('이메일 또는 비밀번호가 잘못되었습니다.');
@@ -92,6 +110,17 @@ const SignIn = () => {
     setIsLogin(true);
     setPassword('');
     setConfirmPassword('');
+  };
+
+  const handleKakaoLogin = () => {
+    if (window.Kakao && window.Kakao.Auth) {
+      window.Kakao.Auth.authorize({
+        redirectUri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+      });
+    } else {
+      toast.error('카카오 SDK가 초기화되지 않았습니다.');
+      console.error('Kakao SDK is not initialized.');
+    }
   };
 
   const validateEmail = (email) => {
@@ -217,6 +246,11 @@ const SignIn = () => {
 
           <button className="signup-btn" onClick={toggleMode}>
             {isLogin ? '계정이 없나요?' : '계정이 있습니다'}
+          </button>
+
+          {/* 카카오 로그인 버튼 */}
+          <button className="kakao-login-btn" onClick={handleKakaoLogin}>
+            카카오로 로그인
           </button>
         </div>
       </div>

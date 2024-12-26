@@ -7,15 +7,19 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.8",
+    "gh-pages": "^6.2.0",
     "jquery": "^3.7.1",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1",
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.6",
     "web-vitals": "^2.1.4"
-    },
+  },
   "scripts": {
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -41,6 +45,5 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
-  "homepage": "https://05solar.github.io/-WSD-Assignment-02/"
-
+  "homepage": "https://05solar.github.io/-WSD-Assignment-02"
 }
