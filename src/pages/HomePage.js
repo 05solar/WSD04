@@ -3,7 +3,6 @@ import axios from 'axios';
 import { throttle } from 'lodash';
 import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 추가
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import '../styles/HomePage.css';
 
@@ -118,7 +117,7 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
-        <button className="logout-btn" onClick={handleLogout}>
+                  <button className="logout-btn" onClick={handleLogout}>
             로그아웃
           </button>
       </div>
