@@ -1,7 +1,7 @@
 // src/pages/SignIn.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import bcrypt from 'bcryptjs'; // 비밀번호 해시화를 위한 라이브러리
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/SignIn.css';
@@ -27,6 +27,12 @@ const SignIn = () => {
       setRememberMe(true);
     }
 
+    // 로그인 상태 확인
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      navigate('/home');
+    }
+
     // Kakao SDK 동적 로드 및 초기화
     loadKakaoSdk()
       .then((Kakao) => {
@@ -41,7 +47,7 @@ const SignIn = () => {
         console.error('Kakao SDK 로딩 오류:', error);
         toast.error('카카오 SDK 로딩에 실패했습니다.');
       });
-  }, []);
+  }, [navigate]);
 
   const toggleMode = () => {
     setAnimating(true);
@@ -51,7 +57,7 @@ const SignIn = () => {
     }, 500);
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     // 이메일 형식 검증
     if (!validateEmail(email)) {
@@ -59,32 +65,24 @@ const SignIn = () => {
       return;
     }
     // 로그인 로직
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.email === email && storedUser.password === password) {
-      // TMDB API 호출하여 로그인 검증 (비밀번호를 API 키로 사용)
-      try {
-        const tmdbApiKey = process.env.REACT_APP_TMDB_API_KEY;
-        await axios.get('https://api.themoviedb.org/3/movie/550', {
-          headers: {
-            Authorization: `Bearer ${tmdbApiKey}`,
-          },
-        });
-        // 로그인 성공 처리
-        toast.success('로그인 성공!');
-        if (rememberMe) {
-          localStorage.setItem('rememberedEmail', email);
-        } else {
-          localStorage.removeItem('rememberedEmail');
-        }
-        localStorage.setItem('isLoggedIn', 'true');
-        navigate('/home');
-      } catch (error) {
-        toast.error('TMDB API 키가 유효하지 않습니다.');
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find((user) => user.email === email);
+  
+    if (user && bcrypt.compareSync(password, user.password)) {
+      // 로그인 성공 처리
+      toast.success('로그인 성공!');
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
       }
+      localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태 설정
+      navigate('/home');
     } else {
       toast.error('이메일 또는 비밀번호가 잘못되었습니다.');
     }
   };
+  
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -103,9 +101,25 @@ const SignIn = () => {
       toast.error('약관에 동의해야 합니다.');
       return;
     }
-    // 회원 정보 저장
-    const user = { email, password };
-    localStorage.setItem('user', JSON.stringify(user));
+    // 기존 사용자 목록 가져오기
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // 중복 이메일 확인
+    const isExistingUser = users.some((user) => user.email === email);
+    if (isExistingUser) {
+      toast.error('이미 등록된 이메일입니다.');
+      return;
+    }
+
+    // 비밀번호 해시화
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    // 새로운 사용자 추가
+    const newUser = { email, password: hashedPassword };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
     toast.success('회원가입 성공! 로그인 페이지로 이동합니다.');
     setIsLogin(true);
     setPassword('');

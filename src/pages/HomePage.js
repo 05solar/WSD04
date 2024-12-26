@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { throttle } from 'lodash';
 import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 추가
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import '../styles/HomePage.css';
 
 const HomePage = () => {
+  
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +18,17 @@ const HomePage = () => {
   });
 
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // 로컬 스토리지에서 로그인 상태 및 사용자 정보 제거
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('rememberedEmail');
+    localStorage.removeItem('user');
+    localStorage.removeItem('likedMovies'); // 원하는 경우 찜한 영화도 제거
+    toast.success('로그아웃 되었습니다.');
+    navigate('/');
+  };
+
   const location = useLocation(); // 현재 경로 확인을 위한 useLocation 사용
 
   // 메뉴 아이템 배열 생성
@@ -103,6 +118,9 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
+        <button className="logout-btn" onClick={handleLogout}>
+            로그아웃
+          </button>
       </div>
       <div className="content">
         <div className="movie-list">
