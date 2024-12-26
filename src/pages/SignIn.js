@@ -264,8 +264,9 @@ const SignIn = () => {
 
           {/* 카카오 로그인 버튼 */}
           <button className="kakao-login-btn" onClick={handleKakaoLogin}>
-            카카오로 로그인
+              카카오로 로그인
           </button>
+
         </div>
       </div>
 

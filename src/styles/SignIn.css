@@ -404,3 +404,50 @@ input[type="checkbox"] {
         padding: 0.3rem; /* 버튼 패딩 감소 */
     }
 }
+/* 카카오 로그인 버튼 스타일 */
+.kakao-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FEE500; /* 카카오의 대표 색상인 노란색 */
+    color: #3C1E1E; /* 텍스트 색상: 진한 갈색 */
+    border: none;
+    border-radius: 20px; /* 둥근 모서리 */
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    max-width: 400px; /* 입력 필드와 동일한 너비 */
+    margin-top: 1rem; /* 다른 버튼과의 간격 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+}
+
+.kakao-login-btn:hover {
+    background-color: #fde74c; /* 호버 시 조금 더 진한 노란색 */
+    transform: translateY(-2px); /* 약간 위로 이동 */
+}
+
+.kakao-login-btn:active {
+    background-color: #fcd703; /* 클릭 시 더욱 진한 노란색 */
+    transform: translateY(0); /* 원래 위치로 복귀 */
+}
+
+.kakao-login-btn::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('\kakao_logo.png'); /* 카카오 로고 이미지 경로 수정 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 0.5rem;
+}
+
+/* 카카오 로고 이미지 사용 시 */
+.kakao-login-btn .kakao-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
