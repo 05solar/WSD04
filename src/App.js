@@ -1,4 +1,4 @@
-// src/App.js
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from './pages/SignIn';
@@ -7,7 +7,7 @@ import PopularPage from './pages/PopularPage';
 import SearchPage from './pages/SearchPage';
 import LikePage from './pages/LikePage';
 import KakaoCallback from './pages/KakaoCallback';
-import ProtectedRoute from './pages/ProtectedRoute'; // ProtectedRoute 임포트
+import ProtectedRoute from './pages/ProtectedRoute'; 
 
 const App = () => {
   return (

@@ -1,42 +1,43 @@
+// src/pages/KakaoCallback.js
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const KakaoCallback = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    // URL에서 인가 코드 추출
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const error = urlParams.get('error');
+    const query = new URLSearchParams(location.search);
+    const code = query.get('code');
 
-    if (error) {
-      toast.error('카카오 로그인에 실패했습니다.');
-      navigate('/');
-    } else if (code) {
-      // 인가 코드를 백엔드로 전송하여 토큰 교환 및 사용자 정보 가져오기
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/kakao/callback`, { code })
+    if (code) {
+      // 백엔드 서버로 인가 코드 전송
+      axios.post('/api/kakao/callback', { code })
         .then(response => {
-          // 백엔드에서 받은 사용자 정보 및 JWT 토큰 처리
-          const { token, user } = response.data;
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(user));
-          toast.success('카카오 로그인에 성공했습니다.');
+          const { accessToken, refreshToken, userInfo } = response.data;
+          // 토큰 저장 및 사용자 정보 처리
+          localStorage.setItem('access_token', accessToken);
+          localStorage.setItem('refresh_token', refreshToken);
+          // 필요 시 사용자 정보 저장
+          toast.success('카카오 로그인 성공!');
           navigate('/home');
         })
-        .catch(err => {
-          console.error(err);
-          toast.error('카카오 로그인 처리 중 오류가 발생했습니다.');
+        .catch(error => {
+          console.error('카카오 토큰 교환 오류:', error);
+          toast.error('카카오 로그인 실패!');
           navigate('/');
         });
+    } else {
+      toast.error('카카오 로그인에 필요한 코드가 없습니다.');
+      navigate('/');
     }
-  }, [navigate]);
+  }, [location, navigate]);
 
   return (
     <div>
-      <h2>로그인 처리 중...</h2>
+      <h2>로그인 중...</h2>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 // src/pages/SignIn.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bcrypt from 'bcryptjs'; // 비밀번호 해시화를 위한 라이브러리
+import bcrypt from 'bcryptjs'; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/SignIn.css';
-import { loadKakaoSdk } from '../utils/loadKakaoSdk'; // 올바른 경로로 수정
+import { loadKakaoSdk } from '../utils/loadKakaoSdk'; 
 
 const SignIn = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -82,7 +82,6 @@ const SignIn = () => {
       toast.error('이메일 또는 비밀번호가 잘못되었습니다.');
     }
   };
-  
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -128,8 +127,35 @@ const SignIn = () => {
 
   const handleKakaoLogin = () => {
     if (window.Kakao && window.Kakao.Auth) {
-      window.Kakao.Auth.authorize({
-        redirectUri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+      window.Kakao.Auth.login({
+        success: function(authObj) {
+          console.log('카카오 로그인 성공', authObj);
+          window.Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res) {
+              console.log('사용자 정보', res);
+              const nickname = res.properties.nickname;
+              const email = res.kakao_account.email;
+
+              // 사용자 정보 저장 또는 로그인 처리
+              // 예: 백엔드 없이 localStorage에 저장
+              // 실제 애플리케이션에서는 보안상의 이유로 토큰을 localStorage에 저장하지 않는 것이 좋습니다.
+              localStorage.setItem('isLoggedIn', 'true');
+              localStorage.setItem('kakao_access_token', authObj.access_token);
+              localStorage.setItem('kakao_email', email);
+              toast.success('카카오 로그인 성공!');
+              navigate('/home');
+            },
+            fail: function(error) {
+              console.error('사용자 정보 요청 실패', error);
+              toast.error('사용자 정보 요청에 실패했습니다.');
+            }
+          });
+        },
+        fail: function(err) {
+          console.error('카카오 로그인 실패', err);
+          toast.error('카카오 로그인에 실패했습니다.');
+        },
       });
     } else {
       toast.error('카카오 SDK가 초기화되지 않았습니다.');

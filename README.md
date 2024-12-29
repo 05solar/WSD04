@@ -1,5 +1,12 @@
-웹서비스 설계 과제 2 
+과제 4번입니다
 
-웹 구동 영상 
+commit 내역은 
+https://github.com/05solar/-WSD-Assignment-02 여기에 있습니다
 
-https://youtu.be/h6kkzkMUZIQ 
+
+실행 명령어 
+
+npm install
+npm run deply
+명령어 실행 후 
+깃허브 액션창에 들어가 링크 확인
